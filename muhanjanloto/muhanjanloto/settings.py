@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-x242)c2=z_%*8@ceka4e@7)m!tepezrm8^223ip5z0p+$*=ou4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['muhanjan.ru']
+ALLOWED_HOSTS = ['HERE.IS.MY.IP', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'u1625777_loto',
         'USER': 'u1625777_Yann',
         'PASSWORD': 'fM8kK3vP0x',
-        'HOST': 'localhost',
+        'HOST': '31.31.198.99',
     }
 }
 
