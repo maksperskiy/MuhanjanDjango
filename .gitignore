@@ -31,4 +31,3 @@ _ReSharper*/
 #Nuget packages folder
 packages/
 *restart-app
-*passenger_wsgi.py
