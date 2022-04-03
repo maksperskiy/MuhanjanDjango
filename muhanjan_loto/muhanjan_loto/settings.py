@@ -75,9 +75,9 @@ WSGI_APPLICATION = 'muhanjan_loto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'u1625777_loto',
-        'USER': 'u1625777_Yann',
+        'USER': 'u1625777_yann',
         'PASSWORD': 'fM8kK3vP0x',
         'HOST': 'localhost',
     }
