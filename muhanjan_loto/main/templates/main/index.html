@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% block title %}MuhanJan{% endblock %}
+{% load static %}
+{% block content %}
+    <header>
+        <div class="head">
+            <div class="header-content">
+                <div class="logo">
+                    <a href=""><img class="horse" src="{% static 'main/images/horse.svg' %}" alt=""></a>
+                    <div class="text-logo">
+                        <h5>MuhanJan</h5>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <a href=""><img class="link" src="{% static 'main/images/twitch.svg' %}" alt=""></a>
+                    <a href=""><img class="link" src="{% static 'main/images/telegram.svg' %}" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="lobbies">
+                <div class="lobby">
+                    <div class="lobby-text">
+                        <h1>NAME OF GAME</h1>
+                    </div>
+                    <div class="title-game">
+                        <div class="block-game">
+                            <h1>Title of game</h1>
+                            <h5>online: 10/2000</h5>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="news">
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
