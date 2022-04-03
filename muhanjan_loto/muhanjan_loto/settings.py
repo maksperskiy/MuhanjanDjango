@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5(x=1w%q-)2!0)y4m2a=mv)^&i594yvt5m7%=12qh5x(x93dvf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['muhanjan.ru','www.muhanjan.ru']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'u1625777_loto',
         'USER': 'u1625777_yann',
         'PASSWORD': 'fM8kK3vP0x',
-        'HOST': 'localhost',
+        'HOST': '31.31.198.99',
     }
 }
 
@@ -118,7 +118,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT='static/'
+STATIC_ROOT = 'static/'
 STATIC_URL = 'static/'
 
 # Default primary key field type
