@@ -214,11 +214,9 @@ scroll-page {
     width: 0;
 }
 
-/*
 .scrolling-games::-webkit-scrollbar{
     width: 0;
 }
-*/
 
 .border{
     border: 2px solid black;
