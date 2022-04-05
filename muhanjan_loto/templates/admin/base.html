@@ -29,9 +29,21 @@
     <!-- Header -->
     {% block header %}
     <div id="header">
-        <div id="branding">
-        {% block branding %}{% endblock %}
+        <div class="content_header">
+            <div class="content_logo">
+                <a href=""><img class="horse" src="{% static 'admin/images/horse.svg' %}" alt=""></a>
+                <h5>MuhanJan</h5>
+            </div>
+            <div class="content_text">
+                <h1>ADMIN</h1>
+            </div>
+            <div class="buttons">
+                <a href=""><img src="{% static 'admin/images/twitch.svg' %}" alt=""></a>
+                <a href=""><img src="{% static 'admin/images/telegram.svg' %}" alt=""></a>
+            </div>
         </div>
+        
+
         {% block usertools %}
         {% if has_permission %}
         <div id="user-tools">

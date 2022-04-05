@@ -1,61 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /* LOGIN FORM */
 
+
+
 .login {
-    background: var(--darkened-bg);
+
+    background: white;
     height: auto;
-}
-
-.login #header {
-    height: auto;
-    padding: 15px 16px;
-    justify-content: space-between;
-}
-
-.login #header h1 {
-    font-size: 18px;
-    margin: 0;
-}
-
-.login #header h1 a {
-    color: var(--header-link-color);
-}
-
-.login #content {
-    padding: 20px 20px 0;
+    font-family: 'Montserrat';
 }
 
 .login #container {
+
     background: var(--body-bg);
-    border: 1px solid var(--hairline-color);
     border-radius: 4px;
     overflow: hidden;
-    width: 28em;
-    min-width: 300px;
-    margin: 100px auto;
-    height: auto;
 }
 
+.login #header {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+    justify-content: center;
+    background: #F9BBAD;
+    filter: drop-shadow(0px 0px 37px rgba(0, 0, 0, 0.25));
+}
+
+.content_header{
+    display: flex;
+    width: 1170px;
+    justify-content: space-between;
+}
+
+.content_logo {
+    margin-top: 5px;
+    width: 300px;
+    display: flex;
+}
+
+.content_logo img{
+    width: 55px;
+    transform: scale(-1, 1);
+}
+
+.login #header h5{
+    display: inline;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    color: #232D52;
+    margin: 15px;
+}
+
+.content_text{
+    margin-top: 15px;
+    width: 300px;
+    text-align: center;
+
+}
+.content_text h1 {
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 900;
+    color: #232D52;
+    line-height: 85%;
+}
+
+.buttons{
+    margin-top: 15px;
+    width: 360px;
+    transform: scale(-1, 1);
+}
+
+.buttons img{
+    margin: 5px;
+    width: 20px;
+    transform: scale(-1, 1);
+}
+
+
+.login #header h1 a {
+    color: white;
+}
+
+.login #content {
+
+    background: white;
+    padding: 20px 20px 0;
+
+}
+
+
 .login .form-row {
+    margin-left: 815px;
+    width: 200px;
+    border-radius: 5px;
+    background: #D0EBFE;
     padding: 4px 0;
 }
 
 .login .form-row label {
+    width: 200px;
+    color: #8D8D8D;
     display: block;
     line-height: 2em;
+    text-align: center;
 }
 
 .login .form-row #id_username, .login .form-row #id_password {
+
+    width: 200px;
+    background: white;
     padding: 8px;
-    width: 100%;
     box-sizing: border-box;
+    color: black;
+
 }
 
 .login .submit-row {
-    padding: 1em 0 0 0;
-    margin: 0;
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.login .submit-row input{
+    width: 125px;
+    height: 35px;
+    background-color: #C1E3FF;
+    border: 2px solid #d4d4d4;;
+    border-radius: 10px;
 }
 
 .login .password-reset-link {
     text-align: center;
+}
+
+#footer{
+    background: white;
 }
