@@ -10,104 +10,92 @@
         </div>
 
         
-        <div class="container">
-            {% regroup lobbies by game as games %}
-              
-            {% for game, lobbies in games %}
-            <div class="lobbies">
-                <div class="lobby">
-                    <div class="lobby-text">
-                        <h1>{{ game.name }}</h1>
+            <div class="container">
+                <div class="games">
+                    {% regroup lobbies by game as games %}
+                    {% for game, lobbies in games %}
+                    <div class="lobbies">
+                        <div class="lobby">
+                            <div class="lobby-text">
+                                <h1>{{ game.name }}</h1>
+                            </div>
+                            <scroll-container class="scrolling-games">
+                                {% for lobby in lobbies %}
+                                <scroll-page>
+                                    <div class="title-game">
+                                        <div class="block-game">
+                                            <h1>{{ lobby.name }}</h1>
+                                            <h5>online: {{ lobby.count_users }}/{{ lobby.max_users }}</h5>
+                                        </div>
+                                    </div>
+                                </scroll-page>
+                                {% endfor %}
+                            </scroll-container>
+                        </div>
                     </div>
-                    <scroll-container class="scrolling-games">
-                        {% for lobby in lobbies %}
+                    {% endfor %}
+                </div>
+                
+                <div class="delimeter"></div>
+
+                <div class="news">
+                    <scroll-container class="scrolling-news">
                         <scroll-page>
-                            <div class="title-game">
-                                <div class="block-game">
-                                    <h1>{{ lobby.name }}</h1>
-                                    <h5>online: {{ lobby.count_users }}/{{ lobby.max_users }}</h5>
+                            <div class="title-news">
+                            <img src="{% static 'main/images/img.jpg' %}">
+                                <div class="news-text">
+                                    <h3>NAME OF GAME</h3>
+                                    <p>News text... News text... News text... 
+                                        News text... News text... News text... News text...</p>
                                 </div>
                             </div>
                         </scroll-page>
-                        {% endfor %}
+
+                        <scroll-page>
+                            <div class="title-news">
+                            <img src="{% static 'main/images/img.jpg' %}">
+                                <div class="news-text">
+                                    <h3>NAME OF GAME</h3>
+                                    <p>News text... News text... News text... 
+                                        News text... News text... News text... News text...</p>
+                                </div>
+                            </div>
+                        </scroll-page>
+
+                        <scroll-page>
+                            <div class="title-news">
+                            <img src="{% static 'main/images/img.jpg' %}">
+                                <div class="news-text">
+                                    <h3>NAME OF GAME</h3>
+                                    <p>News text... News text... News text... 
+                                        News text... News text... News text... News text...</p>
+                                </div>
+                            </div>
+                        </scroll-page>
+
+                        <scroll-page>
+                            <div class="title-news">
+                            <img src="{% static 'main/images/img.jpg' %}">
+                                <div class="news-text">
+                                    <h3>NAME OF GAME</h3>
+                                    <p>News text... News text... News text... 
+                                        News text... News text... News text... News text...</p>
+                                </div>
+                            </div>
+                        </scroll-page>
+
+                        <scroll-page>
+                            <div class="title-news">
+                            <img src="{% static 'main/images/img.jpg' %}">
+                                <div class="news-text">
+                                    <h3>NAME OF GAME</h3>
+                                    <p>News text... News text... News text... 
+                                        News text... News text... News text... News text...</p>
+                                </div>
+                            </div>
+                        </scroll-page>
                     </scroll-container>
                 </div>
-            {% endfor %}
-
-            </div>
-            
-
-
-            
-                    
-            
-                    {{ lobby.count_users }}
-
-            
-            <div class="delimeter"></div>
-
-            <div class="news">
-                <scroll-container class="scrolling-news">
-
-                    <scroll-page>
-                        <div class="title-news">
-                        <img src="{% static 'main/images/img.jpg' %}">
-                            <div class="news-text">
-                                <h3>NAME OF GAME</h3>
-                                <p>News text... News text... News text... 
-                                    News text... News text... News text... News text...</p>
-                            </div>
-                        </div>
-                    </scroll-page>
-
-                    <scroll-page>
-                        <div class="title-news">
-                        <img src="{% static 'main/images/img.jpg' %}">
-                            <div class="news-text">
-                                <h3>NAME OF GAME</h3>
-                                <p>News text... News text... News text... 
-                                    News text... News text... News text... News text...</p>
-                            </div>
-                        </div>
-                    </scroll-page>
-
-                    <scroll-page>
-                        <div class="title-news">
-                        <img src="{% static 'main/images/img.jpg' %}">
-                            <div class="news-text">
-                                <h3>NAME OF GAME</h3>
-                                <p>News text... News text... News text... 
-                                    News text... News text... News text... News text...</p>
-                            </div>
-                        </div>
-                    </scroll-page>
-
-                    <scroll-page>
-                        <div class="title-news">
-                        <img src="{% static 'main/images/img.jpg' %}">
-                            <div class="news-text">
-                                <h3>NAME OF GAME</h3>
-                                <p>News text... News text... News text... 
-                                    News text... News text... News text... News text...</p>
-                            </div>
-                        </div>
-                    </scroll-page>
-
-                    <scroll-page>
-                        <div class="title-news">
-                        <img src="{% static 'main/images/img.jpg' %}">
-                            <div class="news-text">
-                                <h3>NAME OF GAME</h3>
-                                <p>News text... News text... News text... 
-                                    News text... News text... News text... News text...</p>
-                            </div>
-                        </div>
-                    </scroll-page>
-
-                    
-
-
-                </scroll-container>
             </div>
         </div>
     </section>
