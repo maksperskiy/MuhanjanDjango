@@ -11,63 +11,36 @@
 
         
         <div class="container">
+            {% regroup lobbies by game as games %}
+              
+            {% for game, lobbies in games %}
             <div class="lobbies">
                 <div class="lobby">
                     <div class="lobby-text">
-                        <h1>NAME OF GAME</h1>
+                        <h1>{{ game.name }}</h1>
                     </div>
                     <scroll-container class="scrolling-games">
+                        {% for lobby in lobbies %}
                         <scroll-page>
                             <div class="title-game">
                                 <div class="block-game">
-                                    <h1>Title of game</h1>
-                                    <h5>online: 10/2000</h5>
+                                    <h1>{{ lobby.name }}</h1>
+                                    <h5>online: 10/{{ lobby.max_users }}</h5>
                                 </div>
                             </div>
                         </scroll-page>
-                        <scroll-page>
-                            <div class="title-game">
-                                <div class="block-game">
-                                    <h1>Title of game</h1>
-                                    <h5>online: 10/2000</h5>
-                                </div>
-                            </div>
-                        </scroll-page>
-                        <scroll-page>
-                            <div class="title-game">
-                                <div class="block-game">
-                                    <h1>Title of game</h1>
-                                    <h5>online: 10/2000</h5>
-                                </div>
-                            </div>
-                        </scroll-page>
+                        {% endfor %}
                     </scroll-container>
                 </div>
-
+            {% endfor %}
 
             </div>
             
 
 
-            {% regroup lobbies by game as games %}
-              
-            {% for game, lobbies in games %}
-
-                {% for lobby in lobbies %}
-                    {{ lobby.name }}
-                    <!--div class="lobby">
-                        <div class="lobby-text">
-                            <h1>NAME OF GAME</h1>
-                        </div>
-                        <div class="title-game">
-                            <div class="block-game">
-                                <h1>Title of game</h1>
-                                <h5>online: 10/2000</h5>
-                            </div>
-                        </div>
-                    </div-->
-                {% endfor %}
-            {% endfor %}
+            
+                    
+            
 
             
             <div class="delimeter"></div>
