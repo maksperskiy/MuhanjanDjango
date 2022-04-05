@@ -16,6 +16,10 @@ class Lobby(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Lobbies'
+        ordering = ['-id']
+
 
 class Player(models.Model):
     twitch_name = models.CharField(max_length=50)

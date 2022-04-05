@@ -8,6 +8,8 @@
             <h1>ДОСТУПНЫЕ ЛОББИ</h1>
             <h1>NEWS</h1>
         </div>
+
+        
         <div class="container">
             <div class="lobbies">
                 <div class="lobby">
@@ -42,22 +44,31 @@
                     </scroll-container>
                 </div>
 
-                {% for lobby in lobbies %}
-                {{ lobby.name }}
-                {% endfor %}
-                <!--div class="lobby">
-                    <div class="lobby-text">
-                        <h1>NAME OF GAME</h1>
-                    </div>
-                    <div class="title-game">
-                        <div class="block-game">
-                            <h1>Title of game</h1>
-                            <h5>online: 10/2000</h5>
-                        </div>
-                    </div>
-                </div-->
 
             </div>
+            
+
+
+            {% regroup lobbies by game as games %}
+              
+            {% for game, lobbies in games %}
+
+                {% for lobby in lobbies %}
+                    {{ lobby.name }}
+                    <!--div class="lobby">
+                        <div class="lobby-text">
+                            <h1>NAME OF GAME</h1>
+                        </div>
+                        <div class="title-game">
+                            <div class="block-game">
+                                <h1>Title of game</h1>
+                                <h5>online: 10/2000</h5>
+                            </div>
+                        </div>
+                    </div-->
+                {% endfor %}
+            {% endfor %}
+
             
             <div class="delimeter"></div>
 
