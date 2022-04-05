@@ -31,3 +31,6 @@ _ReSharper*/
 #Nuget packages folder
 packages/
 *restart-app
+
+*.pyc
+__pycache__/
