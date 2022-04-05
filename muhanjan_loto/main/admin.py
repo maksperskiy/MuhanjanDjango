@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
+
 
 from .forms import LobbyForm
 from .models import Game, Lobby, Player
@@ -26,3 +28,4 @@ class GameAdmin(admin.ModelAdmin):
 admin.site.register(Game, GameAdmin)
 admin.site.register(Lobby, LobbyAdmin)
 admin.site.register(Player)
+admin.site.unregister(Group)
