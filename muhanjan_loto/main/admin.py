@@ -8,5 +8,5 @@ class LobbyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Game)
-admin.site.register(Lobby)
+admin.site.register(Lobby, LobbyAdmin)
 admin.site.register(Player)

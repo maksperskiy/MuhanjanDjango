@@ -34,3 +34,5 @@ packages/
 
 *.pyc
 __pycache__/
+/muhanjan_loto/main/__pycache__/
+/muhanjan_loto/muhanjan_loto/__pycache__/
