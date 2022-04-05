@@ -10,6 +10,22 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    <header>
+        <div class="head">
+            <div class="header-content">
+                <div class="logo">
+                    <a href=""><img class="horse" src="{% static 'main/images/horse.svg' %}" alt=""></a>
+                    <div class="text-logo">
+                        <h5>MuhanJan</h5>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <a href=""><img class="link" src="{% static 'main/images/twitch.svg' %}" alt=""></a>
+                    <a href=""><img class="link" src="{% static 'main/images/telegram.svg' %}" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </header>
     {% block content %}{% endblock %}
 </body>
 </html>
