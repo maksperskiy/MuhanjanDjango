@@ -43,27 +43,26 @@ def get_game_card(request, lobby_id):
         if request.GET['password'] != lobby.password:
             raise PermissionDenied
     
-    if not 'name' in request.GET:
+    if not 'twitch_name' in request.GET:
         raise PermissionDenied
 
-    name = request.GET['name']
+    name = request.GET['twitch_name']
     context = {
         'title': 'Лото "{lobby.name}"',
         'lobby': lobby,
     }
-    if Player.objects.filter(lobby=lobby, name=name).exists():
-        player = Player.objects.filter(lobby=lobby, name=name).first()
+    if Player.objects.filter(lobby=lobby, twitch_name=name).exists():
+        player = Player.objects.filter(lobby=lobby, twitch_name=name).first()
         context['player'] = player
         return render(request, 'loto/card.html', context=context)
 
     employed_cards = Player.objects.filter(lobby=lobby).values('data').all()
-    data = Card.objects.filter(~Q(data__in=employed_cards)).order_by('?').values('data').first()
+    data = Card.objects.filter(~Q(card_id__in=employed_cards)).order_by('?').values('numbers').first()
 
-    data = json.loads(data)
     player = Player.objects.create(
         twitch_name=name, 
         lobby=lobby, 
-        data=data)
+        data=data['numbers'])
     
     context['player'] = player
     return render(request, 'loto/card.html', context=context)
@@ -73,3 +72,17 @@ def is_win(request, player_id):
 
 def add_barrel(request, lobby_id, number):
     pass
+
+def get_winners(request, lobby_id):
+    pass
+
+def submit_winner(request, lobby_id, player_id):
+    pass
+
+def get_stream(request, lobby_id):
+    pass
+
+def stop_game(request, lobby_id):
+    pass
+
+

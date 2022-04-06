@@ -60,6 +60,10 @@ class GameAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ('data', 'twitch_name', 'lobby')
+
+
 admin.site.register(Game, GameAdmin)
 admin.site.register(Lobby, LobbyAdmin)
-admin.site.register(Player)
+admin.site.register(Player, PlayerAdmin)
