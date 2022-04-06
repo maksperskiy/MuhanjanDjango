@@ -7,7 +7,7 @@
     <section>
         <div class="container">
             <div class="container-form">
-                <form action="{ url 'my card' lobby.pk }" method="get">
+                <form action="{% url 'my card' lobby.pk %}" method="get">
                     <p><input type="text" name="twitch_name" placeholder="Никнейм Твич"></p>
                     {% if lobby.password %}
                     <p><input type="password" name="password" placeholder="Пароль"></p>
