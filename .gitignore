@@ -41,3 +41,4 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+/muhanjan_loto/muhanjan_loto/__pycache__/
