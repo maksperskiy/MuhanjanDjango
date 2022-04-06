@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}{{title}}{% endblock %}
+{% load static %}
+
+{% block content %}
+    <link  href="{% static 'loto/css/card.css' %}" rel="stylesheet" type="text/css">
+    <div class="container">
+        <div class="container-content">
+            <div class="container_card">
+                <table>
+                    <tr class="card">
+                        <td>34</td><td>34</td><td>34</td><td>34</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td>
+                    </tr>
+                    <tr class="card">
+                        <td>34</td><td>34</td><td>36</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td>
+                    </tr>
+                    <tr class="card">
+                        <td>34</td><td>34</td><td>36</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="other">
+                <h1>Доп инфа</h1>
+            </div>
+
+        </div>
+        
+        <div class="rules">
+            <h1>Правила</h1>
+        </div>
+    </div>
+{% endblock %}

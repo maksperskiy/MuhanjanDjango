@@ -1,0 +1,55 @@
+.container{
+    display: flex;
+    margin-top: 120px;
+    width: 1170px;
+    height: 600px;
+    justify-content: space-between;
+
+    border: 2px solid #000000;
+    border-radius: 10px;
+    background: #e4f4ff;
+}
+
+.container_card{
+    background: #C4C4C4;
+    width: 600px;
+    height: 200px;
+    margin: 30px;
+}
+
+.container_card table {
+    
+    width: 600px;
+    height: 200px;
+    
+}
+
+.container_card th, td {
+    background: #FBFFC9;
+    border: 1px solid #F9E6AD;
+    padding: 20px;
+    font-weight: 700;
+
+  }
+
+.rules{
+    margin: 30px;
+    width: 400px;
+    text-align: center;
+
+    border: 5px solid #D0EBFE;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+}
+
+.other{
+    margin: 30px;
+    width: 600px;
+    height: 310px;
+    text-align: center;
+
+    border: 2px solid #D0EBFE;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
