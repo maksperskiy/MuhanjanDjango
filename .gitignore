@@ -36,9 +36,9 @@ packages/
 /muhanjan_loto/main/__pycache__/
 /muhanjan_loto/muhanjan_loto/__pycache__/
 /muhanjan_loto/main/__pycache__/
+/muhanjan_loto/main/migrations/__pycache__/
 __pycache__
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-/muhanjan_loto/muhanjan_loto/__pycache__/
