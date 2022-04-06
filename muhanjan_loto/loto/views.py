@@ -33,12 +33,16 @@ def enter_lobby_page(request, lobby_id):
     }
     return render(request, 'loto/enter_lobby.html', context=context)
 
-def get_game_card(request, lobby_id, name, password):
+def get_game_card(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id).first()
     
-    if password != lobby.password:
+    if not ('password' in request.GET and 'name' in request.GET):
+        raise PermissionDenied
+
+    if request.GET['password'] != lobby.password:
         raise PermissionDenied
     
+    name = request.GET['name']
     context = {
         'title': 'Лото "{lobby.name}"',
         'lobby': lobby,
