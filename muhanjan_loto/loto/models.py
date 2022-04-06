@@ -7,7 +7,7 @@ from main.models import Lobby, Player
 
 class Card(models.Model):
     card_id = models.IntegerField(blank=True, null=True)
-    numbers = models.CharField(max_length=50)
+    numbers = models.CharField(max_length=100)
 
     def __str__(self):
         return self.numbers

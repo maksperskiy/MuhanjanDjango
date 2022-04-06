@@ -1,18 +1,22 @@
 from django.contrib import admin
 
+from .generator import LotoGenerator
 # Register your models here.
 
 from .models import Card, Barrel, Winner, Stream
 
 
 @admin.action(description='Generate cards')
-def make_published(modeladmin, request, queryset):
-    print('asdasdasd')
-
+def generate_cards(modeladmin, request, queryset):
+    cards = [Card(card_id=key, numbers=value) for key, value in LotoGenerator.generate_lotteries().items()]
+    Card.objects.bulk_create(cards)
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ['id', 'numbers']
-    actions = [make_published]
+    list_display = ['card_id', 'numbers']
+    actions = [generate_cards]
+
+    def get_ordering(self, request):
+        return ['card_id']
 
 
 def get_app_list(self, request):

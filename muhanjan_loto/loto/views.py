@@ -28,7 +28,7 @@ def manage_page(request, lobby_id):
 def enter_lobby_page(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id).first()
     context = {
-        'title': 'Войти в лобби "{lobby.name}"',
+        'title': f'Войти в лобби "{lobby.name}"',
         'lobby': lobby,
     }
     return render(request, 'loto/enter_lobby.html', context=context)
@@ -36,12 +36,16 @@ def enter_lobby_page(request, lobby_id):
 def get_game_card(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id).first()
     
-    if not ('password' in request.GET and 'name' in request.GET):
+    if lobby.password:
+        if not 'password' in request.GET:
+            raise PermissionDenied
+
+        if request.GET['password'] != lobby.password:
+            raise PermissionDenied
+    
+    if not 'name' in request.GET:
         raise PermissionDenied
 
-    if request.GET['password'] != lobby.password:
-        raise PermissionDenied
-    
     name = request.GET['name']
     context = {
         'title': 'Лото "{lobby.name}"',
