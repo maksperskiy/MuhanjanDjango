@@ -29,10 +29,10 @@ class Barrel(models.Model):
 
 class Winner(models.Model):
     is_submited = models.BooleanField(default=False)
-    lobby = models.ForeignKey(Player, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
     
     class Meta():
-        index_together = [['lobby']]
+        index_together = [['player']]
 
 
 class Stream(models.Model):

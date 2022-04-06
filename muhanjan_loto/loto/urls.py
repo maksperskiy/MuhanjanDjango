@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-    path('managelobby/<int:pk>', views.manage_page, name='manage lobby')
+    path('managelobby/<int:lobby_id>', views.manage_page, name='manage lobby')
 ]
