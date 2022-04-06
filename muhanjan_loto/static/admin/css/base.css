@@ -947,7 +947,7 @@ table#change-history tbody th {
     font-size: 14px;
     margin: -8px 0 8px 0;
     font-weight: normal;
-    color: var(--header-color);
+    color:  #232D52;
 }
 
 #branding a:hover {
@@ -972,7 +972,8 @@ table#change-history tbody th {
 #user-tools a:focus, #user-tools a:hover {
     text-decoration: none;
     border-bottom-color: var(--primary);
-    color: var(--primary);
+    color:  #232D52;
+
 }
 
 /* SIDEBAR */
