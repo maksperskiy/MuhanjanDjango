@@ -121,6 +121,18 @@ body {
     margin-left: 10px;
 }
 
+.scrolling-games a{
+    display: flex;
+    text-decoration: none;
+    color: black;
+
+    margin: 10px;
+    width: 240px;
+    height: 160px;
+    background: #FBFFC9;
+
+}
+
 .title-game {
     display: flex;
     flex-direction: row;
@@ -128,10 +140,7 @@ body {
     justify-content: space-between;
 }
 .block-game {
-    margin: 10px;
-    width: 240px;
-    height: 160px;
-    background: #FBFFC9;
+    
 }
 
 .block-game h1{
@@ -202,6 +211,7 @@ body {
     overflow-x: scroll;
     scroll-behavior: smooth;
 }
+
 
 scroll-page {
     display: flex;

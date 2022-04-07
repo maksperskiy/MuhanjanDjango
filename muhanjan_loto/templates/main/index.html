@@ -22,12 +22,15 @@
                             <scroll-container class="scrolling-games">
                                 {% for lobby in lobbies %}
                                 <scroll-page>
-                                    <div class="title-game">
-                                        <div class="block-game">
-                                            <h1>{{ lobby.name }}</h1>
-                                            <h5>online: {{ lobby.count_users }}/{{ lobby.max_users }}</h5>
+                                    <a class="link-game" href="{% url 'enter lobby' lobby.pk %}">
+                                        <div class="title-game">
+                                            <div class="block-game">
+                                                <h1>{{ lobby.name }}</h1>
+                                                <h5>online: {{ lobby.count_users }}/{{ lobby.max_users }}</h5>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
+                                    
                                 </scroll-page>
                                 {% endfor %}
                             </scroll-container>
