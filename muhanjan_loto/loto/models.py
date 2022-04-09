@@ -37,7 +37,7 @@ class Winner(models.Model):
 
 class Stream(models.Model):
     data = models.TextField()
-    lobby = models.ForeignKey(Player, on_delete=models.CASCADE)
+    lobby = models.ForeignKey(Lobby, on_delete=models.CASCADE)
     
     class Meta():
         index_together = [['lobby']]
