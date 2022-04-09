@@ -12,7 +12,7 @@ def manage_page(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id).first()
 
     if not (request.user.is_superuser or lobby.creator == request.user):
-        raise PermissionDenied
+        return render(request, '403/403.html')
 
     barrels = Barrel.objects.filter(lobby=lobby).values('number').all()
     winners = Winner.objects.filter(player__lobby=lobby).values('player').all()

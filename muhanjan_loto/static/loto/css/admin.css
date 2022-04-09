@@ -1,0 +1,83 @@
+.head{
+    background: #F9BBAD; 
+}
+
+.content-admin{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    vertical-align: text-top;
+}
+
+
+.container{
+    display: flex;
+    margin-top: 120px;
+    width: 1170px;
+    height: 800px;
+    justify-content: space-between;
+
+    border-radius: 10px;
+    background: #e4f4ff;
+}
+
+.card_button{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card_button a{
+    text-decoration: none;
+    color: #232D52;
+    background: #C1E3FF;
+    border: 2px solid #dadada;
+    border-radius: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+
+    padding: 10px;
+    text-align: center;
+
+    font-weight: 600;
+}
+
+.rules{
+    height: 650px;
+}
+
+.container_card{
+    height: 632px;
+}
+
+.container_card table {
+    height: 632px;
+}
+
+.rules p {
+    font-size: 24px;
+    font-weight: 700;
+
+    margin-left: 30px;
+    text-align: left;
+}
+
+.winners{
+    display: flex;
+    background: #D0EBFE;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.content-admin h5{
+
+    display: inline;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 900;
+    color: #232D52;
+}
+
+.buttons{
+    margin-right: 90px;
+}
+
