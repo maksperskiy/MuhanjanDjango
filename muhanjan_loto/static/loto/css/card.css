@@ -1,4 +1,4 @@
-.container{
+.container {
     display: flex;
     margin-top: 120px;
     width: 1170px;
@@ -9,7 +9,7 @@
     background: #e4f4ff;
 }
 
-.container_card{
+.container_card {
     background: #C4C4C4;
     width: 600px;
     height: 200px;
@@ -17,10 +17,10 @@
 }
 
 .container_card table {
-    
+
     width: 600px;
     height: 200px;
-    
+
 }
 
 .container_card th, td {
@@ -28,10 +28,14 @@
     border: 1px solid #F9E6AD;
     padding: 20px;
     font-weight: 700;
+    transition: all .25s;
+}
 
-  }
+.container_card th, td:hover {
+    background: #ffccC9;
+}
 
-.rules{
+.rules {
     margin: 30px;
     width: 400px;
     text-align: center;
@@ -42,7 +46,7 @@
 
 }
 
-.other{
+.other {
     margin: 30px;
     width: 600px;
     height: 310px;
