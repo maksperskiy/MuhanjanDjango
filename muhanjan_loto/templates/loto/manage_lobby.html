@@ -92,11 +92,9 @@
             </div>
 
             <div class="card_button">
-                <a href="">Страница отображения</a>
-                <a href="">Завершить игру</a>
-
+                <a id="get_stream" href="{% url 'get_stream' lobby.pk %}" target=»_blank»>Страница отображения</a>
+                <a id="stop_game" href="{% url 'stop game' lobby.pk %}" target=»_blank»>Завершить игру</a>
             </div>
-
         </div>
         <div class="rules">
             <h1>Победители</h1>
@@ -104,9 +102,57 @@
                 <p>1. Player</p>
                 <p>✔</p>
             </div>
-
-
-            
         </div>
     </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+
+        $("#stop_game").click(function () {
+            
+            $.ajax({
+                url: '{% url 'stop game' lobby.pk %}',
+                data: {
+                    'lobby_id': lobby.pk
+                },
+                dataType: 'json',
+                success: function (data) {
+                  document.getElementById('p-text').innerHTML = data["respond"];
+                }
+              });
+            });
+        
+
+        $("#get_stream").click(function () {
+            
+            $.ajax({
+                url: '{% url 'get_stream' lobby.pk %}',
+                data: {
+                    'data': stream.data
+                },
+                dataType: 'json',
+                success: function (data) {
+                  document.getElementById('p-text').innerHTML = data["respond"];
+                }
+              });
+            });
+
+            $(Barrel.number).click(function () {
+            
+                $.ajax({
+                    url: '{% url 'add_barrel' lobby.pk %}',
+                    data: {
+                        'data': Barrel.number
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                      document.getElementById('p-text').innerHTML = data["respond"];
+                    }
+                  });
+                });
+
+                console.log("Asd")
+        
+        </script>
+
 {% endblock %}
