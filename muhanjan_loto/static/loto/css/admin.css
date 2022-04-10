@@ -25,19 +25,31 @@
     justify-content: space-between;
 }
 
-.card_button a{
-    text-decoration: none;
+
+.click {
     color: #232D52;
     background: #C1E3FF;
     border: 2px solid #dadada;
     border-radius: 5px;
+    
+    text-align: center;
+    transition: 0.2s;
+    
+}
+
+.click h5{
     margin-left: 50px;
     margin-right: 50px;
-
-    padding: 10px;
-    text-align: center;
-
     font-weight: 600;
+}
+
+.click:hover{
+    background: #a0d4ff;
+}
+
+.barrel_reg{
+    display: flex;
+    justify-content: center;
 }
 
 .rules{

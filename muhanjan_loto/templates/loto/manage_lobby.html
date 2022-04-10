@@ -92,8 +92,16 @@
             </div>
 
             <div class="card_button">
-                <a id="get_stream" href="{% url 'get_stream' lobby.pk %}" target=»_blank»>Страница отображения</a>
-                <a id="stop_game" href="{% url 'stop game' lobby.pk %}" target=»_blank»>Завершить игру</a>
+                <div id="get_stream" class="click">
+                    <h5 class="btn_open">Страница отображения</h5>
+                </div>
+                <div id="stop_game" class="click">
+                    <h5 class="btn_end">Завершить игру</h5>
+                </div>
+            </div>
+
+            <div class="barrel_reg">
+                <h4>Число 5 зарегистрированно</h4>
             </div>
         </div>
         <div class="rules">
@@ -103,56 +111,41 @@
                 <p>✔</p>
             </div>
         </div>
+        
     </div>
+    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <script>
 
         $("#stop_game").click(function () {
-            
             $.ajax({
-                url: '{% url 'stop game' lobby.pk %}',
-                data: {
-                    'lobby_id': lobby.pk
-                },
-                dataType: 'json',
-                success: function (data) {
-                  document.getElementById('p-text').innerHTML = data["respond"];
+                url: '{% url 'stop_game' lobby.pk %}',
+                success: function(result) {
+                    $('.btn_end').html("Игра завершена");
                 }
               });
             });
         
 
         $("#get_stream").click(function () {
-            
             $.ajax({
                 url: '{% url 'get_stream' lobby.pk %}',
-                data: {
-                    'data': stream.data
-                },
-                dataType: 'json',
-                success: function (data) {
-                  document.getElementById('p-text').innerHTML = data["respond"];
+                success: function(result) {
+                    $('.btn_open').html("Открытие страницы");
                 }
               });
             });
 
-            $(Barrel.number).click(function () {
-            
-                $.ajax({
-                    url: '{% url 'add_barrel' lobby.pk %}',
-                    data: {
-                        'data': Barrel.number
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                      document.getElementById('p-text').innerHTML = data["respond"];
-                    }
-                  });
+        $("td").click(function () {
+            console.log(1)
+            $.ajax({
+                url: '{% url 'get_stream' lobby.pk %}',
+                success: function(result) {
+                    $('.btn_open').html("Открытие страницы");
+                }
                 });
-
-                console.log("Asd")
-        
+            });
         </script>
 
 {% endblock %}
