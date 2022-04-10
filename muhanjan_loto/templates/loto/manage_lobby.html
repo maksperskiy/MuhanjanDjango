@@ -21,70 +21,70 @@
                     <tr class="card">
                     {% with '1 11 21 31 41 51 61 71 81' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '2 12 22 32 42 52 62 72 82' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '3 13 23 33 43 53 63 73 83' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '4 14 24 34 44 54 64 74 84' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '5 15 25 35 45 55 65 75 85' as range_list %}
                     {% for item in range_list.split %}
-                        <td>{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '6 16 26 36 46 56 66 76 86' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '7 17 27 37 47 57 67 77 87' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '8 18 28 38 48 58 68 78 88' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '9 19 29 39 49 59 69 79 89' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
                     <tr class="card">
                     {% with '10 20 30 40 50 60 70 80 90' as range_list %}
                     {% for item in range_list.split %}
-                        <td id="{{item}}">{{item}}</td>
+                        <td class="not_checked" id="{{item}}" onclick="add_barrel({{item}})">{{item}}</td>
                     {% endfor %}
                     {% endwith %}
                     </tr>
@@ -96,7 +96,7 @@
                     <h5 class="btn_open">Страница отображения</h5>
                 </div>
                 <div id="stop_game" class="click">
-                    <h5 class="btn_end">Завершить игру</h5>
+                    <h5 class="btn_end"><a href={% url 'stop_game' lobby_id=lobby.pk %}>Завершить игру</a></h5>
                 </div>
             </div>
 
@@ -118,34 +118,45 @@
 
     <script>
 
-        $("#stop_game").click(function () {
-            $.ajax({
-                url: '{% url 'stop_game' lobby.pk %}',
-                success: function(result) {
-                    $('.btn_end').html("Игра завершена");
-                }
-              });
-            });
         
-
-        $("#get_stream").click(function () {
+        $.ajax({
+            url: "{% url 'get_barrels' lobby.pk %}",
+            success: function(result) {
+                result["numbers"].forEach((x) => {
+                    var el = document.getElementById(x);
+                    el.className += " checked";
+                    el.classList.remove("not_checked");
+                    el.setAttribute( "onClick", `remove_barrel(${x})` );
+                })
+            }
+        });
+        
+        function add_barrel(id) 
+        {
             $.ajax({
-                url: '{% url 'get_stream' lobby.pk %}',
+                url: "{% url 'add_barrel' lobby.pk 12345 %}".replace(/12345/, id.toString()),
                 success: function(result) {
-                    $('.btn_open').html("Открытие страницы");
+                    var el = document.getElementById(result['number']);
+                    el.className += " checked";
+                    el.classList.remove("not_checked");
+                    el.setAttribute( "onClick", `remove_barrel(${id})` );
                 }
-              });
             });
-
-        $("td").click(function () {
-            console.log(1)
+        };
+        
+        function remove_barrel(id) 
+        {
             $.ajax({
-                url: '{% url 'get_stream' lobby.pk %}',
+                url: "{% url 'remove_barrel' lobby.pk 12345 %}".replace(/12345/, id.toString()),
                 success: function(result) {
-                    $('.btn_open').html("Открытие страницы");
+                    var el = document.getElementById(result['number']);
+                    el.className += " not_checked";
+                    el.classList.remove("checked");
+                    el.setAttribute( "onClick", `add_barrel(${id})` );
                 }
-                });
             });
-        </script>
+        };
+
+    </script>
 
 {% endblock %}

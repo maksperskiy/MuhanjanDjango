@@ -33,6 +33,7 @@
 
 .container_card th, td:hover {
     background: #ffccC9;
+    cursor: pointer;
 }
 
 .rules {
@@ -55,4 +56,12 @@
     border: 2px solid #D0EBFE;
     box-sizing: border-box;
     border-radius: 10px;
+}
+
+.checked {
+    background: #ff7777;
+}
+
+.not_checked {
+    background: #FBFFC9;
 }
