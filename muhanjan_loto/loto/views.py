@@ -95,6 +95,19 @@ def __check_win(player_barrels, barrels):
             return False
     return True
 
+def get_barrels(request, lobby_id):
+    lobby = Lobby.objects.get(pk=lobby_id)
+
+    if not lobby.is_active:
+        return render(request, 'statuses/game_stopped.html')
+
+    numbers = list(set(map(lambda x: x['number'], list(Barrel.objects.filter(lobby=lobby).values('number').all()))))
+
+    response = {
+        'numbers': numbers
+    }
+    return JsonResponse(response)
+
 def add_barrel(request, lobby_id, number):
     lobby = Lobby.objects.get(pk=lobby_id)
 
@@ -103,7 +116,24 @@ def add_barrel(request, lobby_id, number):
 
     Barrel.objects.create(lobby=lobby, number=number)
     
-    new_data = Stream.objects.filter(lobby=lobby).values('data').first() + ' ' + number
+    new_data = Stream.objects.filter(lobby=lobby).values('data').first()['data']
+    new_data += ' ' + str(number)
+    Stream.objects.filter(lobby=lobby).update(data=new_data)
+
+    response = {
+        'number': number
+    }
+    return JsonResponse(response)
+
+def remove_barrel(request, lobby_id, number):
+    lobby = Lobby.objects.get(pk=lobby_id)
+
+    if not lobby.is_active:
+        return render(request, 'statuses/game_stopped.html')
+
+    Barrel.objects.filter(lobby=lobby, number=number).all().delete()
+
+    new_data = Stream.objects.filter(lobby=lobby).values('data').first()['data'].removesuffix(' ' + str(number)) 
     Stream.objects.filter(lobby=lobby).update(data=new_data)
 
     response = {
@@ -133,6 +163,13 @@ def submit_winner(request, player_id):
         'winner': winner
     }
     return JsonResponse(response)
+
+def get_stream_page(request, lobby_id):
+    lobby = Lobby.objects.get(pk=lobby_id)
+    context = {
+        "lobby": lobby
+    }
+    return render(request, 'loto/stream_page.html', context=context)
 
 def get_stream(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id).first()
