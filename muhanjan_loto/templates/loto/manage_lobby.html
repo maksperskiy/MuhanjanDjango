@@ -93,16 +93,13 @@
 
             <div class="card_button">
                 <div id="get_stream" class="click">
-                    <h5 class="btn_open">Страница отображения</h5>
+                    <h5 class="btn_open"><a href={% url 'get_stream_page' lobby_id=lobby.pk %}>Страница отображения</a></h5>
                 </div>
                 <div id="stop_game" class="click">
                     <h5 class="btn_end"><a href={% url 'stop_game' lobby_id=lobby.pk %}>Завершить игру</a></h5>
                 </div>
             </div>
 
-            <div class="barrel_reg">
-                <h4>Число 5 зарегистрированно</h4>
-            </div>
         </div>
         <div class="rules">
             <h1>Победители</h1>

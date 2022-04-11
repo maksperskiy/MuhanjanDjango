@@ -1,0 +1,31 @@
+{% block title %}{{title}}{% endblock %}
+{% load static %}
+
+{% block content %}
+    <link  href="{% static 'loto/css/card.css' %}" rel="stylesheet" type="text/css">
+    <link  href="{% static 'loto/css/admin.css' %}" rel="stylesheet" type="text/css">
+
+
+    <div>
+        <p id="stream"></p>
+    </div>
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+        setInterval(() => get_stream(), 3000);
+
+        function get_stream() 
+        {
+            $.ajax({
+                url: "{% url 'get_stream' lobby.pk %}",
+                success: function(result) {
+                    var el = document.getElementById("stream");
+                    el.innerText = result['data'];
+                }
+            });
+        };
+    </script>
+
+{% endblock %}

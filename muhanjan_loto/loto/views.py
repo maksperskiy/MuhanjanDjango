@@ -9,6 +9,9 @@ from main.models import Lobby, Player
 # Create your views here.
 
 def manage_page(request, lobby_id):
+    if not Lobby.objects.filter(pk=lobby_id).exists():
+        return render(request, 'statuses/404.html')
+
     lobby = Lobby.objects.get(pk=lobby_id)
 
     if not (request.user.is_superuser or lobby.creator == request.user):
@@ -116,6 +119,9 @@ def add_barrel(request, lobby_id, number):
 
     Barrel.objects.create(lobby=lobby, number=number)
     
+    if not Stream.objects.filter(lobby=lobby).exists():
+        Stream.objects.create(lobby=lobby, data='')
+
     new_data = Stream.objects.filter(lobby=lobby).values('data').first()['data']
     new_data += ' ' + str(number)
     Stream.objects.filter(lobby=lobby).update(data=new_data)
@@ -177,10 +183,12 @@ def get_stream(request, lobby_id):
     if not lobby.is_active:
         return render(request, 'statuses/game_stopped.html')
 
-    stream = Stream.objects.get(lobby=lobby)
+    stream = []
+    if Stream.objects.filter(lobby=lobby).exists():
+        stream = Stream.objects.get(lobby=lobby).data
 
     response = {
-        'data': stream.data
+        'data': stream
     }
     return JsonResponse(response)
 
