@@ -103,10 +103,9 @@
         </div>
         <div class="rules">
             <h1>Победители</h1>
-            <div class="winners">
-                <p>1. Player</p>
-                <p>✔</p>
-            </div>
+            <ul id="winners_list">
+
+            </ul>
         </div>
         
     </div>
@@ -115,7 +114,6 @@
 
     <script>
 
-        
         $.ajax({
             url: "{% url 'get_barrels' lobby.pk %}",
             success: function(result) {
@@ -127,6 +125,45 @@
                 })
             }
         });
+
+        setInterval(() => get_winners(), 3000);
+
+        function get_winners() {
+            $.ajax({
+                url: "{% url 'get_winners' lobby.pk %}",
+                success: function(result) {
+                    console.log(result);
+                    var list = document.getElementById("winners_list");
+                    list.innerHTML = "";
+                    result["winners"].forEach((player) => {
+                        var li = document.createElement("li");
+                        li.appendChild(document.createTextNode(player.player_name));
+                        li.setAttribute("id", `player_${player.player_id}`);
+                        li.setAttribute("class", "");
+                        if (!player.is_submited) {
+                            var btn = document.createElement('button');
+                            btn.innerText="Подтвердить";
+                            btn.style.background="green";
+                            btn.setAttribute( "onClick", `submit_winner(${player.player_id})` );
+                            li.appendChild(btn);
+                        }
+                        list.appendChild(li);
+                        console.log(player);
+                    });
+    
+                }
+            });
+        }
+        
+        function submit_winner(id) 
+        {
+            $.ajax({
+                url: "{% url 'submit_winner' 12345 %}".replace(/12345/, id.toString()),
+                success: function(result) {
+                    console.log(result);
+                }
+            });
+        };
         
         function add_barrel(id) 
         {

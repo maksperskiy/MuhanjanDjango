@@ -8,18 +8,25 @@
         <div class="container-content">
             <div class="container_card">
                 <table>
-                    <tr class="card">
-                        <td>34</td><td>34</td><td>34</td><td>34</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td>
-                    </tr>
-                    <tr class="card">
-                        <td>34</td><td>34</td><td>36</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td>
-                    </tr>
-                    <tr class="card">
-                        <td>34</td><td>34</td><td>36</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td><td>23</td>
-                    </tr>
+                    {% for row in card %}
+                        <tr class="card">
+                            {% for col in row %}
+                                    {% if col != 0 %}
+                                        <td id="{{col}}" onclick="add_count({{col}})">
+                                            {{col}}
+                                        </td>
+                                    {% else %}
+                                        <td>
+                                            &emsp;
+                                        </td>
+                                    {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
-
+            <input id="check_btn" type="button" value="Проверить" onclick="check_win();" disabled/>
+            <h1 id="winner">-----------</h1>
             <div class="other">
                 <h1>Доп инфа</h1>
             </div>
@@ -30,4 +37,46 @@
             <h1>Правила</h1>
         </div>
     </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+        var count = 0;
+        function add_count(id) 
+        {
+            count++;
+            var el = document.getElementById(id);
+            el.className += " checked";
+            el.classList.remove("not_checked");
+            el.setAttribute( "onClick", `sub_count(${id})` );
+            if (count == 15) {
+                document.getElementById("check_btn").disabled = false;
+            }
+        };
+        function sub_count(id) 
+        {
+            count--;
+            var el = document.getElementById(id);
+            el.className += " not_checked";
+            el.classList.remove("checked");
+            el.setAttribute( "onClick", `add_count(${id})` );
+        };
+        
+        function check_win() 
+        {
+            $.ajax({
+                url: "{% url 'check_win' player.pk %}",
+                success: function(result) {
+                    var el = document.getElementById("winner");
+                    console.log(result["is_win"]);
+                    if (result["is_win"] == true) {
+                        el.innerHTML = "Ты победил. Жди когда твой ник проверят.";
+                    } else {
+                        el.innerHTML = "Ты не собрал нужные числа. Если собрал, повтори позже.";
+                    }
+                }
+            });
+        };
+
+    </script>
+
 {% endblock %}

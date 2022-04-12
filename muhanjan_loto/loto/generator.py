@@ -23,70 +23,56 @@ COLUMNS = [[1, 9],
 
 class LotoGenerator():
 
-    def generate_images(file_name="Combik.txt", background_name="fon_loto.png"):
+    @staticmethod
+    def generate_loto(loto):
+        loto_items = sorted(json.loads(loto))
+        loto_items_copy = sorted(json.loads(loto))
 
-        # load files
-        file_path = os.path.join(DIR_PATH, file_name)
-        background_path = os.path.join(DIR_PATH, background_name)
-        lotteries = open(file_path, "r", encoding="utf-8")
+        items_per_row = []
 
-        for line_number, loto in enumerate(lotteries.readlines()):
-            fon_loto = Image.open(background_path)
-            loto = loto.replace("\n", "")
-            loto_items = sorted(json.loads(loto))
-            loto_items_copy = sorted(json.loads(loto))
+        for _ in range(1, 4):
+            cols = []
+            for _ in range(5):
+                decade_list = []
+                for idx, col in enumerate(COLUMNS):
+                    for item in loto_items_copy:
+                        if item >= col[0] and item <= col[1]:
+                            decade_list.append(idx+1)
 
-            items_per_row = []
+                while max(Counter(decade_list), key=Counter(decade_list).get) in cols:
+                    decade_list.remove(
+                        max(Counter(decade_list), key=Counter(decade_list).get))
+                new_num = max(Counter(decade_list),
+                                key=Counter(decade_list).get)
 
-            for _ in range(1, 4):
-                cols = []
-                for _ in range(5):
-                    decade_list = []
-                    for idx, col in enumerate(COLUMNS):
-                        for item in loto_items_copy:
-                            if item >= col[0] and item <= col[1]:
-                                decade_list.append(idx+1)
+                loto_items_copy.remove([el for el in loto_items_copy if el >=
+                                        COLUMNS[new_num-1][0] and el <= COLUMNS[new_num-1][1]][0])
+                cols.append(new_num)
 
-                    while max(Counter(decade_list), key=Counter(decade_list).get) in cols:
-                        decade_list.remove(
-                            max(Counter(decade_list), key=Counter(decade_list).get))
-                    new_num = max(Counter(decade_list),
-                                  key=Counter(decade_list).get)
+            cols = sorted(cols)
 
-                    loto_items_copy.remove([el for el in loto_items_copy if el >=
-                                            COLUMNS[new_num-1][0] and el <= COLUMNS[new_num-1][1]][0])
-                    cols.append(new_num)
+            row_items = []
+            for col in cols:
+                item = [el for el in loto_items if el >=
+                        COLUMNS[col-1][0] and el <= COLUMNS[col-1][1]][0]
+                row_items.append(item)
+                loto_items.remove(item)
 
-                cols = sorted(cols)
+            items_per_row.append(row_items)
 
-                row_items = []
-                for col in cols:
-                    item = [el for el in loto_items if el >=
-                            COLUMNS[col-1][0] and el <= COLUMNS[col-1][1]][0]
-                    row_items.append(item)
-                    loto_items.remove(item)
+        loto = []
+        for row in items_per_row:
+            row_data = []
+            for d in range(9):
+                i_data = 0
+                for i in row:
+                    if i // 10 == d or (i == 90 and d == 8):
+                        i_data = i
+                        break
+                row_data.append(i_data)
+            loto.append(row_data)
 
-                items_per_row.append(row_items)
-
-            draw = ImageDraw.Draw(fon_loto)
-            font = ImageFont.truetype(FONT_PATH, 46, encoding="unic")
-
-            row_coords = 90
-            for row in items_per_row:
-                col_coords = 17
-                for item in row:
-                    item_col = [i for i, el in enumerate(
-                        COLUMNS) if item >= el[0] and item <= el[1]][0]
-
-                    draw.text((col_coords + item_col*80 + (15 if (item//10) ==
-                                                           0 else 0), row_coords), str(item), (20, 20, 20), font=font)
-                row_coords += 85
-
-            draw.text((20, 15), str(line_number+1), (20, 20, 20), font=font)
-
-            save_path = os.path.join(
-                DIR_PATH, 'cards', f'loto-{line_number+1}.jpg')
-            fon_loto.save(save_path)
+        return loto
 
     @staticmethod
     def generate_lotteries(count=10):
@@ -117,4 +103,4 @@ class LotoGenerator():
 
 if __name__ == "__main__":
     # generator.generate_images("lotteries.txt")
-    print(LotoGenerator.generate_lotteries(count=11))
+    print(LotoGenerator.generate_loto("[6, 11, 19, 29, 32, 36, 37, 40, 44, 59, 62, 63, 64, 70, 76]"))

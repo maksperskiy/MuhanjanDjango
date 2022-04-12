@@ -10,6 +10,9 @@ urlpatterns = [
 
     path('managelobby/<int:lobby_id>/ajax/stop_game/', views.stop_game, name='stop_game'),
     path('managelobby/<int:lobby_id>/ajax/get_stream/', views.get_stream, name='get_stream'),
+    path('managelobby/<int:player_id>/ajax/check_win/', views.check_win, name='check_win'),
+    path('managelobby/<int:lobby_id>/ajax/get_winners/', views.get_winners, name='get_winners'),
+    path('managelobby/<int:player_id>/ajax/submit_winner/', views.submit_winner, name='submit_winner'),
     path('managelobby/<int:lobby_id>/ajax/add_barrels/', views.get_barrels, name='get_barrels'),
     path('managelobby/<int:lobby_id>/ajax/add_barrel/<int:number>', views.add_barrel, name='add_barrel'),
     path('managelobby/<int:lobby_id>/ajax/remove_barrel/<int:number>/', views.remove_barrel, name='remove_barrel'),
