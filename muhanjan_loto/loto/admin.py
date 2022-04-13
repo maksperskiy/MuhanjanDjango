@@ -26,7 +26,8 @@ def get_app_list(self, request):
     app_ordering = {
         'main': 1,
         'auth': 2,
-        'loto': 3
+        'news': 3,
+        'loto': 4,
     }
     app_list.sort(key=lambda x: app_ordering[x['app_label']])
 

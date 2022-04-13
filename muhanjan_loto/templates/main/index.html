@@ -42,66 +42,60 @@
                 <div class="delimeter"></div>
 
                 <div class="news">
-                    <scroll-container class="scrolling-news">
-                        <scroll-page>
+                    <scroll-container id="news" class="scrolling-news">
+                        {% comment %} <scroll-page>
                             <div class="title-news">
-                            <img src="{% static 'main/images/img.jpg' %}">
+                            <img id='news1' src="{% static 'main/images/img.jpg' %}">
                                 <div class="news-text">
                                     <h3>NAME OF GAME</h3>
                                     <p>News text... News text... News text... 
                                         News text... News text... News text... News text...</p>
                                 </div>
                             </div>
-                        </scroll-page>
-
-                    
-
-                        <scroll-page>
-                            <div class="title-news">
-                            <img src="{% static 'main/images/img.jpg' %}">
-                                <div class="news-text">
-                                    <h3>NAME OF GAME</h3>
-                                    <p>News text... News text... News text... 
-                                        News text... News text... News text... News text...</p>
-                                </div>
-                            </div>
-                        </scroll-page>
-
-                        <scroll-page>
-                            <div class="title-news">
-                            <img src="{% static 'main/images/img.jpg' %}">
-                                <div class="news-text">
-                                    <h3>NAME OF GAME</h3>
-                                    <p>News text... News text... News text... 
-                                        News text... News text... News text... News text...</p>
-                                </div>
-                            </div>
-                        </scroll-page>
-
-                        <scroll-page>
-                            <div class="title-news">
-                            <img src="{% static 'main/images/img.jpg' %}">
-                                <div class="news-text">
-                                    <h3>NAME OF GAME</h3>
-                                    <p>News text... News text... News text... 
-                                        News text... News text... News text... News text...</p>
-                                </div>
-                            </div>
-                        </scroll-page>
-
-                        <scroll-page>
-                            <div class="title-news">
-                            <img src="{% static 'main/images/img.jpg' %}">
-                                <div class="news-text">
-                                    <h3>NAME OF GAME</h3>
-                                    <p>News text... News text... News text... 
-                                        News text... News text... News text... News text...</p>
-                                </div>
-                            </div>
-                        </scroll-page>
+                        </scroll-page> {% endcomment %}
                     </scroll-container>
                 </div>
             </div>
         </div>
     </section>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        
+        get_news()
+
+        function get_news() {
+            var news = document.getElementById('news');
+            $.ajax({
+                url: "{% url 'get_all' %}",
+                success: function(result) {
+                    result["news"].forEach((x) => {
+                        {% comment %} el.setAttribute("src", "data:image/png;base64, " + result["news"][0].image.slice(2,-1)); {% endcomment %}
+                        console.log(result);
+                        var sp = document.createElement("scroll-page");
+                        var dtn = document.createElement("div");
+                        dtn.className = "title-news";
+                        sp.appendChild(dtn);
+                        var img = document.createElement("img");
+                        img.setAttribute("src", "data:image/png;base64, " + x.image.slice(2,-1));
+                        dtn.appendChild(img);
+                        var dnt = document.createElement("div");
+                        var nt = document.createElement("h3");
+                        nt.innerText = x.title;
+                        var ntx = document.createElement("p");
+                        ntx.innerText = x.text.slice(0,100);;
+                        var nd = document.createElement("p");
+                        nd.innerText = (new Date(x.date)).toLocaleDateString("en-GB");
+                        dnt.appendChild(nt);
+                        dnt.appendChild(ntx);
+                        dnt.appendChild(nd);
+                        sp.appendChild(dnt);
+
+                        news.appendChild(sp);
+                    })
+                }
+            });
+        };
+        
+    </script>
 {% endblock %}

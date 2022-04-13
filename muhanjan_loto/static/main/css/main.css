@@ -176,6 +176,11 @@ body {
     margin-top: 26px;
 }
 
+.title-news img{
+    height: 120px;
+    width: 120px;
+}
+
 .news-text{
     margin-left: 16px;
 }

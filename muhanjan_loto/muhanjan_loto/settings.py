@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'loto.apps.LotoConfig',
+    'news.apps.NewsConfig',
 ]
 
 MIDDLEWARE = [
