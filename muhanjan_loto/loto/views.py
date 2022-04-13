@@ -11,15 +11,30 @@ from loto.models import Barrel, Winner, Card, Stream
 from main.models import Lobby, Player
 # Create your views here.
 
+from functools import wraps
+
+
+def authors_only(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        creator = any
+        if "lobby_id" in kwargs:
+            creator = Lobby.objects.get(pk=kwargs["lobby_id"]).creator
+        if "player_id" in kwargs:
+            creator = Player.objects.get(pk=kwargs["player_id"]).lobby.creator
+        if not (request.user.is_superuser or creator == request.user):
+            return render(request, 'statuses/403.html')
+        return function(request, *args, **kwargs)
+    return wrap
+
+
+@authors_only
 def manage_page(request, lobby_id):
     if not Lobby.objects.filter(pk=lobby_id).exists():
         return render(request, 'statuses/404.html')
 
     lobby = Lobby.objects.get(pk=lobby_id)
 
-    if not (request.user.is_superuser or lobby.creator == request.user):
-        return render(request, 'statuses/403.html')
-    
     if not Stream.objects.filter(lobby=lobby).exists():
         Stream.objects.create(lobby=lobby, data='')
 
@@ -30,9 +45,10 @@ def manage_page(request, lobby_id):
         'lobby': lobby,
         'barrels': barrels,
         'winners': winners
-        }
+    }
 
     return render(request, 'loto/manage_lobby.html', context=context)
+
 
 def enter_lobby_page(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
@@ -42,16 +58,17 @@ def enter_lobby_page(request, lobby_id):
     }
     return render(request, 'loto/enter_lobby.html', context=context)
 
+
 def get_game_card(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
-    
+
     if lobby.password:
         if not 'password' in request.GET:
             raise PermissionDenied
 
         if request.GET['password'] != lobby.password:
             raise PermissionDenied
-    
+
     if not 'twitch_name' in request.GET:
         raise PermissionDenied
 
@@ -68,30 +85,36 @@ def get_game_card(request, lobby_id):
         return render(request, 'loto/card.html', context=context)
 
     employed_cards = Player.objects.filter(lobby=lobby).values('data').all()
-    data = Card.objects.filter(~Q(card_id__in=employed_cards)).order_by('?').values('numbers').first()
-    
+    data = Card.objects.filter(~Q(card_id__in=employed_cards)).order_by(
+        '?').values('numbers').first()
+
     player = Player.objects.create(
-        twitch_name=name, 
-        lobby=lobby, 
+        twitch_name=name,
+        lobby=lobby,
         data=data['numbers'])
-        
+
     card = LotoGenerator.generate_loto(data['numbers'])
     context['card'] = card
 
     context['player'] = player
     return render(request, 'loto/card.html', context=context)
 
+
 def check_win(request, player_id):
     player = Player.objects.get(pk=player_id)
 
     if not player.lobby.is_active:
-        return render(request, 'statuses/game_stopped.html')
-        
+        response = {
+            'data': "Игра завершена."
+        }
+        return JsonResponse(response)
+
     barrels = Barrel.objects.filter(lobby=player.lobby).values("number").all()
     player_barrels = json.loads(player.data)
 
-    is_win = __check_win(player_barrels, list([el['number'] for el in list(barrels)]))
-    
+    is_win = __check_win(player_barrels, list(
+        [el['number'] for el in list(barrels)]))
+
     if is_win:
         Winner.objects.create(player=player)
 
@@ -100,37 +123,50 @@ def check_win(request, player_id):
     }
     return JsonResponse(response)
 
+
 def __check_win(player_barrels, barrels):
     for el in player_barrels:
         if el not in barrels:
             return False
     return True
 
+
+@authors_only
 def get_barrels(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
 
     if not lobby.is_active:
-        return render(request, 'statuses/game_stopped.html')
+        response = {
+            'data': "Игра завершена."
+        }
+        return JsonResponse(response)
 
-    numbers = list(set(map(lambda x: x['number'], list(Barrel.objects.filter(lobby=lobby).values('number').all()))))
+    numbers = list(set(map(lambda x: x['number'], list(
+        Barrel.objects.filter(lobby=lobby).values('number').all()))))
 
     response = {
         'numbers': numbers
     }
     return JsonResponse(response)
 
+
+@authors_only
 def add_barrel(request, lobby_id, number):
     lobby = Lobby.objects.get(pk=lobby_id)
 
     if not lobby.is_active:
-        return render(request, 'statuses/game_stopped.html')
+        response = {
+            'data': "Игра завершена."
+        }
+        return JsonResponse(response)
 
     Barrel.objects.create(lobby=lobby, number=number)
-    
+
     if not Stream.objects.filter(lobby=lobby).exists():
         Stream.objects.create(lobby=lobby, data='')
 
-    new_data = Stream.objects.filter(lobby=lobby).values('data').first()['data']
+    new_data = Stream.objects.filter(
+        lobby=lobby).values('data').first()['data']
     new_data += ' ' + str(number)
     Stream.objects.filter(lobby=lobby).update(data=new_data)
 
@@ -139,50 +175,61 @@ def add_barrel(request, lobby_id, number):
     }
     return JsonResponse(response)
 
+
+@authors_only
 def remove_barrel(request, lobby_id, number):
     lobby = Lobby.objects.get(pk=lobby_id)
 
     if not lobby.is_active:
-        return render(request, 'statuses/game_stopped.html')
+        response = {
+            'data': "Игра завершена."
+        }
+        return JsonResponse(response)
 
     Barrel.objects.filter(lobby=lobby, number=number).all().delete()
 
-    new_data = Stream.objects.filter(lobby=lobby).values('data').first()['data'].removesuffix(' ' + str(number)) 
+    new_data = Stream.objects.filter(lobby=lobby).values('data').first()[
+        'data'].removesuffix(' ' + str(number))
     Stream.objects.filter(lobby=lobby).update(data=new_data)
 
     response = {
         'number': number
     }
     return JsonResponse(response)
-    
 
+
+@authors_only
 def get_winners(request, lobby_id):
     winners_list = []
     if Winner.objects.filter(player__lobby_id=lobby_id).exists():
         winners = list(Winner.objects.filter(player__lobby_id=lobby_id).all())
         [winners_list.append(
             {
-                "player_id": el.player.pk, 
-                "player_name": el.player.twitch_name, 
+                "player_id": el.player.pk,
+                "player_name": el.player.twitch_name,
                 "is_submited": el.is_submited
             }
         ) for el in winners]
     response = {
-            'winners': winners_list
+        'winners': winners_list
     }
     return JsonResponse(response)
 
+
+@authors_only
 def submit_winner(request, player_id):
     player = Player.objects.get(pk=player_id)
     winner = Winner.objects.filter(player=player).update(is_submited=True)
 
-    new_data = Stream.objects.filter(lobby_id=player.lobby_id).values('data').first()['data'] + ' Победитель: ' + player.twitch_name
+    new_data = Stream.objects.filter(lobby_id=player.lobby_id).values(
+        'data').first()['data'] + ' Победитель: ' + player.twitch_name
     Stream.objects.filter(lobby=player.lobby).update(data=new_data)
 
     response = {
         'winner': winner
     }
     return JsonResponse(response)
+
 
 def get_stream_page(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
@@ -191,11 +238,15 @@ def get_stream_page(request, lobby_id):
     }
     return render(request, 'loto/stream_page.html', context=context)
 
+
 def get_stream(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id).first()
-    
+
     if not lobby.is_active:
-        return render(request, 'statuses/game_stopped.html')
+        response = {
+            'data': "Игра завершена."
+        }
+        return JsonResponse(response)
 
     stream = []
     if Stream.objects.filter(lobby=lobby).exists():
@@ -206,6 +257,8 @@ def get_stream(request, lobby_id):
     }
     return JsonResponse(response)
 
+
+@authors_only
 def stop_game(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
 
