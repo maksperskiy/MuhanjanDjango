@@ -28,6 +28,27 @@ def authors_only(function):
     return wrap
 
 
+def is_active_lobby(function):
+    @wraps(function)
+    def wrap(request, *args, **kwargs):
+        lobby = any
+        if "lobby_id" in kwargs:
+            lobby = Lobby.objects.get(pk=kwargs["lobby_id"])
+        if "player_id" in kwargs:
+            lobby = Player.objects.get(pk=kwargs["player_id"]).lobby
+        if not lobby.is_active:
+            if "ajax" in request.path:
+                response = {
+                    'data': "Игра завершена."
+                }
+                return JsonResponse(response)
+            else:
+                return render(request, 'statuses/game_stopped.html')
+        else:
+            return function(request, *args, **kwargs)
+    return wrap
+
+@is_active_lobby
 @authors_only
 def manage_page(request, lobby_id):
     if not Lobby.objects.filter(pk=lobby_id).exists():
@@ -50,6 +71,7 @@ def manage_page(request, lobby_id):
     return render(request, 'loto/manage_lobby.html', context=context)
 
 
+@is_active_lobby
 def enter_lobby_page(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
     context = {
@@ -59,6 +81,7 @@ def enter_lobby_page(request, lobby_id):
     return render(request, 'loto/enter_lobby.html', context=context)
 
 
+@is_active_lobby
 def get_game_card(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
 
@@ -100,14 +123,9 @@ def get_game_card(request, lobby_id):
     return render(request, 'loto/card.html', context=context)
 
 
+@is_active_lobby
 def check_win(request, player_id):
     player = Player.objects.get(pk=player_id)
-
-    if not player.lobby.is_active:
-        response = {
-            'data': "Игра завершена."
-        }
-        return JsonResponse(response)
 
     barrels = Barrel.objects.filter(lobby=player.lobby).values("number").all()
     player_barrels = json.loads(player.data)
@@ -131,15 +149,10 @@ def __check_win(player_barrels, barrels):
     return True
 
 
+@is_active_lobby
 @authors_only
 def get_barrels(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
-
-    if not lobby.is_active:
-        response = {
-            'data': "Игра завершена."
-        }
-        return JsonResponse(response)
 
     numbers = list(set(map(lambda x: x['number'], list(
         Barrel.objects.filter(lobby=lobby).values('number').all()))))
@@ -150,15 +163,10 @@ def get_barrels(request, lobby_id):
     return JsonResponse(response)
 
 
+@is_active_lobby
 @authors_only
 def add_barrel(request, lobby_id, number):
     lobby = Lobby.objects.get(pk=lobby_id)
-
-    if not lobby.is_active:
-        response = {
-            'data': "Игра завершена."
-        }
-        return JsonResponse(response)
 
     Barrel.objects.create(lobby=lobby, number=number)
 
@@ -176,15 +184,10 @@ def add_barrel(request, lobby_id, number):
     return JsonResponse(response)
 
 
+@is_active_lobby
 @authors_only
 def remove_barrel(request, lobby_id, number):
     lobby = Lobby.objects.get(pk=lobby_id)
-
-    if not lobby.is_active:
-        response = {
-            'data': "Игра завершена."
-        }
-        return JsonResponse(response)
 
     Barrel.objects.filter(lobby=lobby, number=number).all().delete()
 
@@ -242,12 +245,6 @@ def get_stream_page(request, lobby_id):
 def get_stream(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id).first()
 
-    if not lobby.is_active:
-        response = {
-            'data': "Игра завершена."
-        }
-        return JsonResponse(response)
-
     stream = []
     if Stream.objects.filter(lobby=lobby).exists():
         stream = Stream.objects.get(lobby=lobby).data
@@ -258,12 +255,10 @@ def get_stream(request, lobby_id):
     return JsonResponse(response)
 
 
+@is_active_lobby
 @authors_only
 def stop_game(request, lobby_id):
     lobby = Lobby.objects.get(pk=lobby_id)
-
-    if not lobby.is_active:
-        return render(request, 'statuses/game_stopped.html')
 
     lobby.is_active = False
     lobby.save()

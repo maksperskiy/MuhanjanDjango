@@ -7,8 +7,8 @@ urlpatterns = [
     path('enterlobby/<int:lobby_id>', views.enter_lobby_page, name='enter lobby'),
     path('card/<int:lobby_id>/', views.get_game_card, name='my card'),
     path('managelobby/<int:lobby_id>/get_stream_page/', views.get_stream_page, name='get_stream_page'),
-
-    path('managelobby/<int:lobby_id>/ajax/stop_game/', views.stop_game, name='stop_game'),
+    path('managelobby/<int:lobby_id>/stop_game/', views.stop_game, name='stop_game'),
+    
     path('managelobby/<int:lobby_id>/ajax/get_stream/', views.get_stream, name='get_stream'),
     path('managelobby/<int:player_id>/ajax/check_win/', views.check_win, name='check_win'),
     path('managelobby/<int:lobby_id>/ajax/get_winners/', views.get_winners, name='get_winners'),
