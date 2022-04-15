@@ -3,7 +3,7 @@ from django.template.defaulttags import register
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
+from django.db.models import *
 from django.urls import register_converter
 from loto.generator import LotoGenerator
 
@@ -73,7 +73,10 @@ def manage_page(request, lobby_id):
 
 @is_active_lobby
 def enter_lobby_page(request, lobby_id):
-    lobby = Lobby.objects.get(pk=lobby_id)
+    lobby = Lobby.objects.filter(pk=lobby_id) \
+        .annotate(count_users=Count('player')).first()
+    if lobby.count_users >= lobby.max_users:
+        return render(request, 'statuses/lobby_is_full.html')
     context = {
         'title': f'Войти в лобби "{lobby.name}"',
         'lobby': lobby,
@@ -83,7 +86,10 @@ def enter_lobby_page(request, lobby_id):
 
 @is_active_lobby
 def get_game_card(request, lobby_id):
-    lobby = Lobby.objects.get(pk=lobby_id)
+    lobby = Lobby.objects.filter(pk=lobby_id) \
+        .annotate(count_users=Count('player')).first()
+    if lobby.count_users >= lobby.max_users:
+        return render(request, 'statuses/lobby_is_full.html')
 
     if lobby.password:
         if not 'password' in request.GET:

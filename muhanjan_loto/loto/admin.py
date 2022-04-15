@@ -8,7 +8,8 @@ from .models import Card, Barrel, Winner, Stream
 
 @admin.action(description='Generate cards')
 def generate_cards(modeladmin, request, queryset):
-    cards = [Card(card_id=key, numbers=value) for key, value in LotoGenerator.generate_lotteries().items()]
+    Card.objects.all().delete()
+    cards = [Card(card_id=key, numbers=value) for key, value in LotoGenerator.generate_lotteries(50000).items()]
     Card.objects.bulk_create(cards)
 
 class CardAdmin(admin.ModelAdmin):

@@ -3,8 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path('managelobby/<int:lobby_id>', views.manage_page, name='manage lobby'),
-    path('enterlobby/<int:lobby_id>', views.enter_lobby_page, name='enter lobby'),
+    path('managelobby/<int:lobby_id>/', views.manage_page, name='manage lobby'),
+    path('enterlobby/<int:lobby_id>/', views.enter_lobby_page, name='enter lobby'),
     path('card/<int:lobby_id>/', views.get_game_card, name='my card'),
     path('managelobby/<int:lobby_id>/get_stream_page/', views.get_stream_page, name='get_stream_page'),
     path('managelobby/<int:lobby_id>/stop_game/', views.stop_game, name='stop_game'),
@@ -14,7 +14,7 @@ urlpatterns = [
     path('managelobby/<int:lobby_id>/ajax/get_winners/', views.get_winners, name='get_winners'),
     path('managelobby/<int:player_id>/ajax/submit_winner/', views.submit_winner, name='submit_winner'),
     path('managelobby/<int:lobby_id>/ajax/add_barrels/', views.get_barrels, name='get_barrels'),
-    path('managelobby/<int:lobby_id>/ajax/add_barrel/<int:number>', views.add_barrel, name='add_barrel'),
+    path('managelobby/<int:lobby_id>/ajax/add_barrel/<int:number>/', views.add_barrel, name='add_barrel'),
     path('managelobby/<int:lobby_id>/ajax/remove_barrel/<int:number>/', views.remove_barrel, name='remove_barrel'),
 
 
