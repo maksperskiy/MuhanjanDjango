@@ -73,10 +73,7 @@ def manage_page(request, lobby_id):
 
 @is_active_lobby
 def enter_lobby_page(request, lobby_id):
-    lobby = Lobby.objects.filter(pk=lobby_id) \
-        .annotate(count_users=Count('player')).first()
-    if lobby.count_users >= lobby.max_users:
-        return render(request, 'statuses/lobby_is_full.html')
+    lobby = Lobby.objects.get(pk=lobby_id)
     context = {
         'title': f'Войти в лобби "{lobby.name}"',
         'lobby': lobby,
@@ -88,9 +85,6 @@ def enter_lobby_page(request, lobby_id):
 def get_game_card(request, lobby_id):
     lobby = Lobby.objects.filter(pk=lobby_id) \
         .annotate(count_users=Count('player')).first()
-    if lobby.count_users >= lobby.max_users:
-        return render(request, 'statuses/lobby_is_full.html')
-
     if lobby.password:
         if not 'password' in request.GET:
             raise PermissionDenied
@@ -112,6 +106,9 @@ def get_game_card(request, lobby_id):
         card = LotoGenerator.generate_loto(player.data)
         context['card'] = card
         return render(request, 'loto/card.html', context=context)
+
+    if lobby.count_users >= lobby.max_users:
+        return render(request, 'statuses/lobby_is_full.html')
 
     employed_cards = Player.objects.filter(lobby=lobby).values('data').all()
     data = Card.objects.filter(~Q(card_id__in=employed_cards)).order_by(
