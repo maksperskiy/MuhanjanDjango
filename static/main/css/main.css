@@ -5,6 +5,8 @@ body {
     display: flex;
     background: #FFFFFF;
     justify-content: center;
+
+    overflow-x: hidden;
 }
 /* head */
 
@@ -172,27 +174,21 @@ body {
 
 .title-news{
     display: flex;
-    margin-left: 13px;
+    margin-left: px;
     margin-top: 26px;
 }
 
 .title-news img{
+    margin-left: 30px;
     height: 120px;
     width: 120px;
 }
 
-.news-text{
-    margin-left: 16px;
-}
-
-.news-text h3 {
-    margin-top: 5px;
-    margin-bottom: 14px;
-
-}
-
-.news-text p {
-    margin-top: 0px;
+.title-text{
+    margin-left: 15px;
+    padding: 10px;
+    max-width: 250px;
+    word-wrap: break-word;
 }
 
 .delimeter{
@@ -235,7 +231,7 @@ scroll-page {
 }
 
 
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 1200px) {
     .header-content{
         width: 970px;
     }
@@ -285,7 +281,7 @@ scroll-page {
   }
 
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1010px) {
     .header-content{
         width: 668px;
     }
@@ -301,16 +297,17 @@ scroll-page {
     }
     
     .container-text h1{
-        font-size: 28px;
+        font-size: 20px;
     }
 
 
     .lobbies {
-        width: 500px;
+        margin-left: 100px;
+        width: 300px;
     }
     
     .lobby{
-        width: 500px;
+        width: 300px;
     }
     
     
@@ -361,9 +358,11 @@ scroll-page {
     }
     
     .news{
+        margin-right: 100px;
+
         margin-top: 12px;
         height: 500px;
-        width: 300px;
+        width: 200px;
         background: #E5E5E5;
         border: 1px solid #E5E5E5;
         border-radius: 10px;
@@ -374,19 +373,21 @@ scroll-page {
         margin-left: 13px;
         margin-top: 26px;
     }
-    
-    .news-text{
-        margin-left: 16px;
+
+    .title-news img {
+        width: 50px;
+        height: 50px;
+
     }
     
-    .news-text h3 {
-        margin-top: 5px;
-        margin-bottom: 14px;
+    
+    .title-text h3 {
+        font-size: 15px;
     
     }
     
-    .news-text p {
-        margin-top: 0px;
+    .title-text p {
+        font-size: 10px;
     }
     
     .delimeter{
@@ -406,3 +407,92 @@ scroll-page {
 
   }
 
+  @media screen and (max-width: 700px) {
+    .header-content{
+        width: 320px;
+    }
+
+    .container {
+        display: block;
+        margin-top: 70px;
+        width: 320px;
+        height: auto;
+    }
+
+    .container-text{
+        display: none;
+        width: 375px;
+        justify-content: center;
+    }
+    
+    .container-text h1{
+        font-size: 10px;
+    }
+
+
+    .lobbies {
+        width: 300px;
+    }
+    
+    .lobby{
+        margin-left: -90px;
+        width: 300px;
+    }
+    
+    
+    .lobby-text h1{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+    
+        margin-left: 10px;
+    }
+    
+    .scrolling-games a{
+        display: flex;
+        text-decoration: none;
+        color: black;
+    
+        margin: 10px;
+        width: 240px;
+        height: 160px;
+        background: #FBFFC9;
+    
+    }
+    
+    
+    
+    .news{
+        margin-right: 100px;
+
+        margin-top: 12px;
+        height: 500px;
+        width: 300px;
+        background: #E5E5E5;
+        border: 1px solid #E5E5E5;
+        border-radius: 10px;
+        margin-left: 10px;
+    }
+    
+
+    .title-news img {
+        width: 75px;
+        height: 75px;
+
+    }
+    
+    
+    .title-text h3 {
+        font-size: 20px;
+    
+    }
+    
+    .title-text p {
+        font-size: 15px;
+    }
+    
+    .delimeter{
+        display: none;
+    }
+
+  }

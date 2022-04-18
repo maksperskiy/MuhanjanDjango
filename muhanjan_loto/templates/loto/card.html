@@ -6,6 +6,7 @@
     <link  href="{% static 'loto/css/card.css' %}" rel="stylesheet" type="text/css">
     <div class="container">
         <div class="container-content">
+            <h1>Ваша карточка</h1>
             <div class="container_card">
                 <table>
                     {% for row in card %}
@@ -26,15 +27,7 @@
                 </table>
             </div>
             <input id="check_btn" type="button" value="Проверить" onclick="check_win();" disabled/>
-            <h1 id="winner">-----------</h1>
-            <div class="other">
-                <h1>Доп инфа</h1>
-            </div>
-
-        </div>
-        
-        <div class="rules">
-            <h1>Правила</h1>
+            <h1 id="winner"></h1>
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

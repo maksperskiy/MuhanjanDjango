@@ -44,3 +44,11 @@
     width: 170px;
 }
 
+@media screen and (max-width: 425px) {
+    .container-form{
+        width: 320px;
+    }
+    .container-form input {
+        width: 300px;
+    }
+}
