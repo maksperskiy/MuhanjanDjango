@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .generator import LotoGenerator
 # Register your models here.
 
 from .models import Card, Barrel, Winner, Stream

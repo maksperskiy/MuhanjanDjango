@@ -174,11 +174,11 @@ body {
 
 .title-news{
     display: flex;
-    margin-left: px;
     margin-top: 26px;
 }
 
 .title-news img{
+    border-radius: 5px;
     margin-left: 30px;
     height: 120px;
     width: 120px;
